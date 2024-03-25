@@ -18,11 +18,12 @@ def create_server() -> socket:
 
     return server
 
+
 def run_server_connection(server: socket) -> None:
-    print('Wait...')
+    print('Server: Wait...')
     conn, addr = server.accept()
     with conn:
-        print('Connected by', addr)
+        print('Server: Connected by', addr)
         file = open("hello.html", "r")
         hello = file.read()
         data = hello.encode('utf-8')
@@ -31,4 +32,6 @@ def run_server_connection(server: socket) -> None:
             r = conn.recv(1024)
             if r.decode('utf-8') == 'stop':
                 break
-            conn.send(data)
+            else:
+                print("Server:", r.decode('utf-8'))
+                conn.send(data)

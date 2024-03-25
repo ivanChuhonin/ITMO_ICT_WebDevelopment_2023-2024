@@ -1,11 +1,19 @@
 # Упражнение 2
 
+## Описание Задачи
 
+Цель задания - Реализовать клиентскую и серверную часть приложения. Клиент запрашивает у
+сервера выполнение математической операции (Теорема Пифагора), параметры, которые вводятся с
+клавиатуры. Сервер обрабатывает полученные данные и возвращает результат
+клиенту.
 
 ## Код
 
 ### Клиента
 ```python
+import socket
+import sys
+
 def run_tcp_client(port: int, buffer_size: int) -> None:
     try:
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,6 +45,10 @@ def run_tcp_client(port: int, buffer_size: int) -> None:
 ### Сервера
 
 ```python
+import socket
+import sys
+from math import sqrt
+
 def create_server() -> socket:
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -82,3 +94,4 @@ def run_server_connection(server: socket) -> None:
 
     server.close()
 ```
+Создается TCP клиент, который подключается к указанному порту на локальной машине и обменивается данными с сервером. Сервер выполняет математическую операцию на основе введённых данных и даёт ответ.

@@ -1,11 +1,21 @@
 # Упражнение 4
 
+## Описание Задачи
+
+Цель задания - Реализовать двух пользовательский или многопользовательский чат.
+
+
 ## Реализация
 
 ### Клиента
 
 Клиент имеет 2 потока. Один для ввода сообщений. Другой для вывода сообщений
 ```python
+import socket
+import time
+from multiprocessing import Process
+from typing import Tuple
+
 def split_text(text: str) -> Tuple:
     parts = text.split(':')
     if len(parts) != 2:
@@ -70,6 +80,12 @@ if __name__ == '__main__':
 
 
 ```python
+import socket
+import sys
+import time
+from threading import Lock
+from typing import List, Dict
+
 def create_server() -> socket:
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -84,4 +100,32 @@ def create_server() -> socket:
         sys.exit(1)
 
     return server
+
+
+def run_server_connection(server: socket, clients: Dict, lock: Lock) -> None:
+    conn, _ = server.accept()
+    with (conn):
+        data = conn.recv(1024)
+        name = data.decode('utf-8')
+        if name in clients.values():
+            data = f"'{name}' уже тут, вы не '{name}'".encode('utf-8')
+            conn.send(data)
+            return
+
+        for _, friend in clients.items():
+            data = f"server: пришел '{name}'".encode('utf-8')
+            friend.send(data)
+
+        with lock:
+            clients[name] = conn
+
+
+def loop(clients: Dict, lock: Lock):
+    while True:
+        for name, conn in clients.items():
+            print('loop', name)
+            # data = f"server: пришел '{name}'".encode('utf-8')
+            # friend.send(data)
+            pass
+        time.sleep(1)
 ```

@@ -16,14 +16,14 @@ def run_tcp_client(port: int, buffer_size: int) -> None:
         sys.exit(1)
 
     with client:
-        hi = 'hi'.encode('utf-8')
         data = client.recv(buffer_size)
-        print(data.decode('utf-8'))
-        time.sleep(1.0)
+        print("Client:\n", data.decode('utf-8'))
+        time.sleep(3.0)
         # get html again
+        hi = 'hi'.encode('utf-8')
         client.sendall(hi)
         data = client.recv(buffer_size)
-        print(data.decode('utf-8'))
+        print("Client:\nx2\n" + data.decode('utf-8'))
         time.sleep(1.0)
         # stop it
         stop = 'stop'.encode('utf-8')
