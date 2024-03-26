@@ -221,5 +221,5 @@ class MyHTTPServer:
                         body)
         self.send_response(conn, resp)
 ```
-
+![2024-03-27_02-13-02.png](..%2Fstudents%2Fk33421%2FChuhonin_Ivan%2FLr1%2Ftask_5%2F2024-03-27_02-13-02.png)
 
