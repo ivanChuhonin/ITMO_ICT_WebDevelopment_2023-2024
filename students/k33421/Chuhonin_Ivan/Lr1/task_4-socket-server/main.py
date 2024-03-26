@@ -9,9 +9,14 @@ clients = {}
 
 def threaded(conn: socket, sender: str):
     while True:
-        _data = conn.recv(1024)
-        if not _data:
+        try:
+            _data = conn.recv(1024)
+            if len(_data) == 0:
+                break
+        except ConnectionResetError as cre:
             break
+        except BaseException as be:
+            print(str(be))
 
         # reverse the given string from client
         data_str = _data.decode('utf-8')
@@ -60,7 +65,7 @@ if __name__ == '__main__':
     while True:
         # establish connection with client
         conn, addr = server.accept()
-        print('Connected to :', addr[0], ':', addr[1])
+        # print('Connected to :', addr[0], ':', addr[1])
 
         data = conn.recv(1024)
         name = data.decode('utf-8')
@@ -70,6 +75,7 @@ if __name__ == '__main__':
             conn.close()
             continue
 
+        print(f'{name} connected to :', addr[0], ':', addr[1])
         for _, friend in clients.items():
             data = f"server: пришел '{name}'".encode('utf-8')
             friend.send(data)
