@@ -116,8 +116,8 @@ class MyHTTPServer:
     def handle_post_users(self, req):
         user_id = len(self._users) + 1
         self._users[user_id] = {'id': user_id,
-                                'name': req.query['name'][0],
-                                'age': req.query['age'][0]}
+                                'sub_name': req.query['sub_name'][0],
+                                'mark': req.query['mark'][0]}
         return Response(204, 'Created')
 
     def handle_get_users(self, req):
@@ -125,10 +125,10 @@ class MyHTTPServer:
         if 'text/html' in accept:
             contentType = 'text/html; charset=utf-8'
             body = '<html><head></head><body>'
-            body += f'<div>Пользователи ({len(self._users)})</div>'
+            body += f'<div>Отметки ({len(self._users)})</div>'
             body += '<ul>'
             for u in self._users.values():
-                body += f'<li>#{u["id"]} {u["name"]}, {u["age"]}</li>'
+                body += f'<li>#{u["id"]} {u["sub_name"]}, {u["mark"]}</li>'
             body += '</ul>'
             body += '</body></html>'
 
