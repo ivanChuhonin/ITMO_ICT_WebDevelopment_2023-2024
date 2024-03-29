@@ -1,0 +1,15 @@
+<!-- index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    {% for hotel in hotels %}
+    
+        <p>{{ hotel.name }}</p>
+        
+    {% empty %}
+    
+        <p>Отелей пока нет.</p>
+        
+    {% endfor %}
+    
+{% endblock content %}
