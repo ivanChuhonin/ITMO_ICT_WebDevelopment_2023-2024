@@ -1,0 +1,21 @@
+<!-- room.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ hotel.name }}</h2>
+    {% for room in rooms_list %}
+        <article>
+            <p>{{ room }}</p>
+            <p>{{ room.facilities }}</p>
+            <p>Цена: {{ room.price }}</p>
+            <button>бронировать</button>
+        </article>
+        
+        
+    {% empty %}
+    
+        <p>Комнат пока нет.</p>
+        
+    {% endfor %}
+    
+{% endblock content %}

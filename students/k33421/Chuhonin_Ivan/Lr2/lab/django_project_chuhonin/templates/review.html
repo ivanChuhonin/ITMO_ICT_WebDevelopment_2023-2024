@@ -1,0 +1,20 @@
+<!-- review.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ hotel.name }}</h2>
+    {% for review in reviews %}
+        <article>
+            <p>{{ review.comment }}</p>
+            <p>Оценка: {{ review.rating }}</p>
+            <p>Дата отзыва: {{ review.date_review }}</p>
+        </article>
+        
+        
+    {% empty %}
+    
+        <p>Отзывов пока нет.</p>
+        
+    {% endfor %}
+    
+{% endblock content %}

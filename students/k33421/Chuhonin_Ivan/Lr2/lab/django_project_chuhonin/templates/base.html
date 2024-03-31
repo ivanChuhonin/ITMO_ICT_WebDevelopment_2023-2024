@@ -8,7 +8,40 @@
     <title>Hotels</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      h1 {
+        text-align: center;
+        line-height: 80px;
+        margin: 0;
+      }
+
+      article {
+        padding: 10px;
+        margin: 10px;
+        background: ForestGreen;
+        color: white;
+      }
+      /* Add your flexbox CSS below here */
+
+      section {
+          display: flex;
+      }
+      
+      h2{
+          a{
+              color: yellow;
+          }
+      }
+      
+    </style>
 </head>
 
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -17,8 +50,27 @@
     </a>
 
     <ul class="nav nav-pills">
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Отели</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Профиль</a></li>
+        
+        <li class="nav-item">
+            <a href="/" {% if request.path == '/' %} class="nav-link active" {% else %} class="nav-link" {% endif %} aria-current="page">
+                Отели
+            </a>
+        </li>
+        
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a href="/guests/profile/" {% if request.path == '/guests/profile/' %} class="nav-link active" {% else %} class="nav-link" {% endif %}">
+                    {{ user.get_username }}
+                </a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a href="/guests/login/" {% if request.path == '/guests/login/' %} class="nav-link active" {% else %} class="nav-link" {% endif %}>
+                    Войти
+                </a>
+            </li>
+        {% endif %}
+        
         <li class="nav-item"><a href="#" class="nav-link">Постояльцы</a></li>
     </ul>
 </header>

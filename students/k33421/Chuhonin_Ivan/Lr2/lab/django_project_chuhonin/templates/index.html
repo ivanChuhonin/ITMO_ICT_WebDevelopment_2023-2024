@@ -3,8 +3,11 @@
 
 {% block content %}
     {% for hotel in hotels %}
-    
-        <p>{{ hotel.name }}</p>
+        <article>
+            <h2><a href="hotel/{{ hotel.path }}/">{{ hotel.name }}</a></h2>
+            <p>{{ hotel.address }}</p>
+            <p>{{ hotel.description }}</p>
+        </article>    
         
     {% empty %}
     
