@@ -27,8 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='отели'),
     path('hotel/<str:hotel_path>/', views.rooms, name='номера'),
-    path('agreements', views.agreements, name='бронь'),
+    path('hotel/<str:hotel_path>/<int:room_id>/', views.agreements, name='бронь'),
     # path('profile', views.profile, name='профиль'),
-    path('review', views.review, name='отзывы'),
+    path('guests/profile/<int:agreement_id>/', views.review, name='отзывы'),
     path('report', views.report, name='постояльцы'),
 ]

@@ -44,17 +44,20 @@ class Room(models.Model):
         return f'{self.CHOICES[self.room_type]} для {self.capacity} гостей'
 
 
-# class Agreement(models.Model):
-#     id_room = models.ForeignKey('Room', on_delete=models.CASCADE)
-#     id_guest = models.ForeignKey('Guest', on_delete=models.CASCADE)
-#     date_from = models.DateTimeField(auto_now_add=True)
-#     date_to = models.DateTimeField()
+class Agreement(models.Model):
+    id_room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    id_guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    date_from = models.DateField()
+    date_to = models.DateField()
+
+    def __str__(self):
+        return f'{self.id_room} по адресу {self.id_room.id_hotel.address}'
 
 
-# class Review(models.Model):
-#     id_agreement = models.ForeignKey('Agreement', on_delete=models.CASCADE)
-#     date_review = models.DateTimeField(auto_now_add=True)
-#     comment = models.TextField()
-#     rating = models.IntegerField(
-#         validators=[MinValueValidator(1), MaxValueValidator(10)]
-#     )
+class Review(models.Model):
+    id_agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
+    date_review = models.DateField(auto_now_add=True)
+    comment = models.TextField()
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )

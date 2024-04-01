@@ -3,9 +3,21 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        профиль
-    </div>
+    <h2>Бронирования</h2>
+    {% for agreement in agreement_list %}
+        <article>
+            <p>{{ agreement.date_from }}</p>
+            <p>{{ agreement.date_to }}</p>
+            <p>{{ agreement }}</p>
+            <button><a href="{{ agreement.id }}">отзыв</a></button>
+        </article>
+        
+        
+    {% empty %}
+    
+        <p>Бронирований пока нет.</p>
+        
+    {% endfor %}
     <form id="logout-form" method="post" action="{% url 'logout' %}">
          {% csrf_token %}
          <button type="submit" class="btn btn-link">Logout</button>

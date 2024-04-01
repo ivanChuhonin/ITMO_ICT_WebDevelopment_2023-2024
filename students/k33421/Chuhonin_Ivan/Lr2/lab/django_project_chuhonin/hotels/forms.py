@@ -1,5 +1,5 @@
 from django import  forms
-from .models import Guest
+from .models import Guest, Review
 from django.core.exceptions import ValidationError
 
 
@@ -28,3 +28,18 @@ class SignUpForm(forms.ModelForm):
             raise ValidationError("Password should contains both letters and numbers")
 
         return password
+
+
+class AgreementForm(forms.Form):
+    date_from = forms.DateField()
+    date_to = forms.DateField()
+
+
+class ReviewForm(forms.Form):
+    room = forms.CharField(required=False, disabled=True)
+    date_from = forms.DateField(required=False, disabled=True)
+    date_to = forms.DateField(required=False, disabled=True)
+    comment = forms.CharField(widget=forms.Textarea)
+    rating = forms.IntegerField()
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    date_review = forms.DateField(required=False, disabled=True)
