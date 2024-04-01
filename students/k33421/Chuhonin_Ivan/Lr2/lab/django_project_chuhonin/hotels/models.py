@@ -51,9 +51,6 @@ class Room(models.Model):
 #     date_to = models.DateTimeField()
 
 
-
-
-
 # class Review(models.Model):
 #     id_agreement = models.ForeignKey('Agreement', on_delete=models.CASCADE)
 #     date_review = models.DateTimeField(auto_now_add=True)

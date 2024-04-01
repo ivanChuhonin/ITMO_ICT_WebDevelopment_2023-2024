@@ -2,21 +2,20 @@ from django import  forms
 from .models import Guest
 from django.core.exceptions import ValidationError
 
+
 class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = Guest
-        #Add fields we will be collecting info for
-        fields = ['first_name','last_name','username', 'password']
+        # Add fields we will be collecting info for
+        fields = ['first_name', 'last_name', 'username', 'password']
 
-
-    # DO form cleanig here
+    # DO form cleaning here
     def clean_username(self):
         username = self.cleaned_data['username']
-        if  Guest.objects.filter(username = username).exists():
+        if Guest.objects.filter(username=username).exists():
             raise ValidationError('Username is not available')
         return username
-
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
@@ -29,4 +28,3 @@ class SignUpForm(forms.ModelForm):
             raise ValidationError("Password should contains both letters and numbers")
 
         return password
-

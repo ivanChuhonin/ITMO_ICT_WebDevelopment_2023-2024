@@ -36,13 +36,13 @@ def register(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            save_form = form.save(commit = False)
+            save_form = form.save(commit=False)
             save_form.set_password(form.cleaned_data.get('password'))
             save_form.save()
             # messages.success(request, 'User registered successfully')
             return redirect('/guests/login/')
         else:
-            return render(request, 'registration/register.html', {'form':form})
+            return render(request, 'registration/register.html', {'form': form})
 
     return render(request, 'registration/register.html')
 
