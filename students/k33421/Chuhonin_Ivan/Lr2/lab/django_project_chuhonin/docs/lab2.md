@@ -31,7 +31,7 @@
 
 ## UML модель
 Место для модели
-
+![2024-03-30_02-24-01.png](2024-03-30_02-24-01.png)
 
 ## Реализация 
 
@@ -103,6 +103,7 @@ Foreign keys заданы, primary keys создаются автоматиче�
 ### `Views.py`
 
 ```python
+from django.shortcuts import render, redirect
 def index(request):
     hotels = Hotel.objects.all()
     return render(request, "index.html", {"hotels": hotels})
@@ -221,3 +222,58 @@ urlpatterns = [
     path('report', views.report, name='постояльцы'),
 ]
 ```
+
+Универсальные адреса ресурсов(вкладок)
+
+### Шаблоны
+
+В templates находятся html-шаблоны. Для примера приведу html страницу списка отелей.
+
+```html
+<!-- index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    {% for hotel in hotels %}
+        <article>
+            <h2><a href="hotel/{{ hotel.path }}/">{{ hotel.name }}</a></h2>
+            <p>{{ hotel.address }}</p>
+            <p>{{ hotel.description }}</p>
+        </article>    
+        
+    {% empty %}
+    
+        <p>Отелей пока нет.</p>
+        
+    {% endfor %}
+    
+{% endblock content %}
+```
+
+Это пример страницы со списком номеров.
+
+```html
+<!-- room.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ hotel.name }}</h2>
+    {% for room in rooms_list %}
+        <article>
+            <p>{{ room }}</p>
+            <p>{{ room.facilities }}</p>
+            <p>Цена: {{room.price}}</p>
+            <button><a href="{{ room.id }}">бронировать</a></button>
+        </article>
+
+    {% empty %}
+    
+        <p>Комнат пока нет.</p>
+        
+    {% endfor %}
+    
+{% endblock content %}
+```
+
+В конечном итоге мы получили сайт с реализованным заявленным функционалом.
+Мы можем просматривать доступные отели и номера в них, бронировать номера, а также оставлять отзывы.
