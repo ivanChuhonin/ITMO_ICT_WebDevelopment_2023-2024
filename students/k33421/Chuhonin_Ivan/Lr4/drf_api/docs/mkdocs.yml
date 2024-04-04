@@ -1,0 +1,39 @@
+site_name: WebDevelopment
+theme:
+  name: material
+  palette:
+    primary: black
+  icon:
+    repo: fontawesome/brands/git-alt
+
+repo_url: https://github.com/ivanChuhonin/ITMO_ICT_WebDevelopment_2023-2024
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+nav:
+  - "№1: Сокеты":
+      - lab1/task1/task1.md
+      - lab1/task2/task2.md
+      - lab1/task3/task3.md
+      - lab1/task4/task4.md
+      - lab1/task5/task5.md
+  - "№2:Список отелей":
+      - lab2/lab2.md
+  - "№3:Реализация серверной части приложения средствами Django и djangorestframework":
+      - lab3/lab3.md
+  - "№4:Анализ данных. Построение инфо-логической модели данных бд":
+      - lab4/lab4.md
