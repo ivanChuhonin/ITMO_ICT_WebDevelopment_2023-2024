@@ -51,7 +51,7 @@ class ReaderSerializer(serializers.HyperlinkedModelSerializer):
 class HallSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hall
-        fields = '__all__'
+        fields = ['id', 'name', 'capacity']
 
 
 class LibraryCardSerializer(serializers.HyperlinkedModelSerializer):
@@ -63,7 +63,8 @@ class LibraryCardSerializer(serializers.HyperlinkedModelSerializer):
 class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ['id', 'book_name', 'author', 'area', 'publishing_house']
+        extra_kwargs = {"id": {"read_only": True}}
 
 
 class BookCopySerializer(serializers.HyperlinkedModelSerializer):
@@ -75,4 +76,4 @@ class BookCopySerializer(serializers.HyperlinkedModelSerializer):
 class OperationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Operation
-        fields = '__all__'
+        fields = ['id_book', 'id_book_copy', 'id_library_card', 'id_hall', 'date_from']

@@ -1,17 +1,51 @@
 <template>
   <div class="main-page">
-    <h1 class="main-title">Добро пожаловать на главную страницу!</h1>
-    <router-link :to="{ name: 'Auth' }">
-      <button class="main-button">Выйти</button>
-    </router-link>
+    <h2 class="main-title">Выберите книгу для чтения!</h2>
+    <ul>
+      <li v-for="{ id, book_name, author, area, publishing_house } in books">
+        <router-link :to="'operation/' + id">{{ book_name }}</router-link><br>
+        <span class="author">{{ author }}</span><br>
+        <span class="message">{{ area }}</span><br>
+        <span class="message">{{ publishing_house }}</span>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  // Компонент для главной страницы
+  data() {
+    return {
+      books: []
+    };
+  },
+  mounted() {
+    // Проверяем наличие токена перед загрузкой информации о пользователе
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      // Если токен отсутствует, перенаправляем на страницу авторизации
+      this.$router.push({name: 'Auth'});
+      return;
+    }
+
+    // Отправляем GET-запрос для получения информации о пользователе
+    axios.get('http://127.0.0.1:8000/books/', {
+      headers: {
+        Authorization: `Token ${accessToken}`,
+      },
+    })
+        .then(response => {
+          this.books = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching user information:', error);
+        });
+  }
 };
 </script>
+
 
 <style scoped>
 .main-page {
