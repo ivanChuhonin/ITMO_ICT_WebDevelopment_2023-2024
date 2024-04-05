@@ -29,7 +29,6 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('register/', views.registration),
     path('token/', views_auth.obtain_auth_token),
-    path('me/', views.getme),
-    path('myreaders/', views.get_read),
-    path('edit/', edit_profile, name='newspaper-list-create'),
+    path('me/', views.userprofile),
+    path('saveme/', views.save_userprofile),
 ]

@@ -10,8 +10,7 @@
 СУБД PostgreSQL *, в соответствии с вариантом задания лабораторной работы.
 
 ## Вариант работы - 2 (библиотека). UML модель
-Место для модели
-
+![2024-04-02_18-48-06.png](2024-04-02_18-48-06.png)
 
 
 ## Реализация 
@@ -20,65 +19,60 @@
 
 ```python
 from django.db import models
-class Guest(AbstractUser):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    is_verified = models.BooleanField(default=False)
-
-
-class Hotel(models.Model):
-    name = models.CharField(max_length=50)
-    owner_name = models.CharField(max_length=50)
+class Reader(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=50)
+    passport = models.CharField(max_length=10)
     address = models.CharField(max_length=50)
-    description = models.TextField()
-    path = models.CharField(max_length=50, default='newhotel')
+    birthdate = models.DateField()
+    is_academic = models.BooleanField()
 
     def __str__(self):
-        return self.name
+        return self.full_name
 
 
-class Room(models.Model):
+class Hall(models.Model):
+    name = models.CharField(max_length=50)
+    capacity = models.IntegerField()
 
+
+class LibraryCard(models.Model):
+    id_reader = models.ForeignKey(Reader, on_delete=models.CASCADE)
+    date_from = models.DateField()
+    date_to = models.DateField()
+
+
+class Book(models.Model):
+    book_name = models.CharField(max_length=50)
+    author = models.CharField(max_length=50)
+    area = models.CharField(max_length=50)
+    publishing_house = models.CharField(max_length=50)
+
+
+class BookCopy(models.Model):
     CHOICES = {
-        'L': 'Люкс',
-        'S': 'Стандарт',
-        # ('single', 'single'),
-        # ('double', 'double'),
-        # ('twin', 'twin'),
-        # ('triple', 'triple'),
+        'N': 'New',
+        'R': 'Regular',
+        'O': 'Out of use',
     }
 
-    room_type = models.CharField(max_length=10, choices=CHOICES, default='S')
-    id_hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    facilities = models.TextField()
-    price = models.IntegerField()
-    capacity = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(6)]
-    )
-    room_no = models.CharField(max_length=50, default='1')
-
-    def __str__(self):
-        return f'{self.CHOICES[self.room_type]} для {self.capacity} гостей'
+    condition = models.CharField(max_length=10, choices=CHOICES, default='N')
+    id_book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    publishing_year = models.DateField()
+    book_cypher = models.CharField(max_length=10)
 
 
-class Agreement(models.Model):
-    id_room = models.ForeignKey('Room', on_delete=models.CASCADE)
-    id_guest = models.ForeignKey('Guest', on_delete=models.CASCADE)
-    date_from = models.DateTimeField(auto_now_add=True)
-    date_to = models.DateTimeField()
-
-
-class Review(models.Model):
-    id_agreement = models.ForeignKey('Agreement', on_delete=models.CASCADE)
-    date_review = models.DateTimeField(auto_now_add=True)
-    comment = models.TextField()
-    rating = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(10)]
-    )
+class Operation(models.Model):
+    id_book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
+    id_library_card = models.ForeignKey(LibraryCard, on_delete=models.CASCADE)
+    id_hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    date_from = models.DateField()
+    date_to = models.DateField()
 ```
 
 В указанном фрагменте кода описывается реализация классов, находящихся в uml диаграмме и необходимых далее.
 Из интересного здесь есть переменная с выборным значением, заданная с помощью CHOISES, также есть переменные с указанным возможным промежутком значений.
 Foreign keys заданы, primary keys создаются автоматически.
 
-### `Views.py`
+![2024-04-05_03-38-24.png](2024-04-05_03-38-24.png)
+Пример запроса в Postman
