@@ -133,6 +133,39 @@ def registration(request):
         })
 
 
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def new_operation(request):
+    user = request.user
+    reader = Reader.objects.get(user=user)
+    try:
+        librarycard = LibraryCard.objects.get(id_reader=reader)
+        book = Book.objects.get(id=request.data["id_book"])
+        book_copy = BookCopy.objects.filter(id_book=book)[0]
+        hall = Hall.objects.get(id=request.data["id_hall"])
+
+        operation = Operation.objects.create(
+            id_library_card=librarycard,
+            id_book_copy=book_copy,
+            id_hall=hall,
+            date_from=request.data["date_from"]
+        )
+        operation.save()
+        return Response(
+            {
+                "success": "операция coхранена",
+                "status": f"{status.HTTP_200_OK} OK",
+            })
+
+    except BaseException as e:
+        return Response(
+           status=status.HTTP_400_BAD_REQUEST,
+           data={
+               "error": "данные содержат ошибку \n" + str(e),
+               "status": f"{status.HTTP_406_NOT_ACCEPTABLE} ERROR",
+           })
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

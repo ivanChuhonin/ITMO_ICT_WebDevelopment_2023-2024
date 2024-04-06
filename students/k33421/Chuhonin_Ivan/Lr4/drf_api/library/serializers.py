@@ -76,4 +76,4 @@ class BookCopySerializer(serializers.HyperlinkedModelSerializer):
 class OperationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Operation
-        fields = ['id_book', 'id_book_copy', 'id_library_card', 'id_hall', 'date_from']
+        fields = '__all__'

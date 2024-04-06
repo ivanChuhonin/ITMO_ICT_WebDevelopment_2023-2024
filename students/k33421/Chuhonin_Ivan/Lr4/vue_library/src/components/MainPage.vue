@@ -1,14 +1,12 @@
 <template>
   <div class="main-page">
     <h2 class="main-title">Выберите книгу для чтения!</h2>
-    <ul>
-      <li v-for="{ id, book_name, author, area, publishing_house } in books">
+      <div class="book-container" v-for="{ id, book_name, author, area, publishing_house } in books">
         <router-link :to="'operation/' + id">{{ book_name }}</router-link><br>
         <span class="author">{{ author }}</span><br>
         <span class="message">{{ area }}</span><br>
         <span class="message">{{ publishing_house }}</span>
-      </li>
-    </ul>
+      </div>
   </div>
 </template>
 
@@ -48,6 +46,15 @@ export default {
 
 
 <style scoped>
+.book-container {
+  width: 400px;
+  margin: 3px auto;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .main-page {
   text-align: center;
   padding: 20px;
@@ -55,7 +62,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  //height: 100vh;
 }
 
 .main-title {
@@ -74,7 +81,7 @@ export default {
   cursor: pointer;
   color: #333;
   transition: background-color 0.3s;
-  margin: 10;
+  margin: 10px;
   border: 1px solid #3498db;
   width: 400px; /* Фиксированная ширина кнопки */
 }

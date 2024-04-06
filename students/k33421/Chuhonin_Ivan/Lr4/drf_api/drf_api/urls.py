@@ -31,4 +31,5 @@ urlpatterns = [
     path('token/', views_auth.obtain_auth_token),
     path('me/', views.userprofile),
     path('saveme/', views.save_userprofile),
+    path('new_operation/', views.new_operation)
 ]

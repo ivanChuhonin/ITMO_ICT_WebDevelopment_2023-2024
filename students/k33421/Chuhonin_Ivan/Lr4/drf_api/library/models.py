@@ -46,7 +46,6 @@ class BookCopy(models.Model):
 
 
 class Operation(models.Model):
-    id_book = 0
     id_book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
     id_library_card = models.ForeignKey(LibraryCard, on_delete=models.CASCADE)
     id_hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
